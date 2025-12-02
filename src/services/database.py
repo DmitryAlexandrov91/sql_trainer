@@ -1,8 +1,12 @@
-from sqlite3 import Connection, Cursor, connect
-from dataclasses import dataclass
 from contextlib import contextmanager
+from dataclasses import dataclass
+from sqlite3 import Connection, Cursor, connect
 from typing import Any, Generator
+
+from loguru import logger
+
 from config.settings import Settings
+from services.loguru_service import LoguruConfig
 
 
 @dataclass
@@ -26,6 +30,7 @@ class CursorService:
     default commit=True
     """
     _connection: ConnectionService
+    _logger: LoguruConfig
 
     @contextmanager
     def __call__(self, commit=True) -> Generator[Cursor, Any, None]:
@@ -33,9 +38,22 @@ class CursorService:
             cur = conn.cursor()
             try:
                 yield cur
-            except Exception:
+            except Exception as e:
+                self._logger()
+                logger.error(e)
                 cur.connection.rollback()
             finally:
                 if commit:
                     cur.connection.commit()
                 cur.close()
+
+
+@dataclass
+class QueryService:
+    """Service for safety send SQL queryes."""
+    _cursor: CursorService
+
+    def __call__(self, sql: str, commit=True) -> Any:
+        cur = self._cursor(commit=commit)
+        with cur as cur:
+            cur.execute(sql)

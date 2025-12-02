@@ -1,22 +1,38 @@
 import punq
+from PyQt6.QtWidgets import QApplication
 
 from config.settings import Settings
-from services.engine import ConnectionService, CursorService
+from services.database import ConnectionService, CursorService, QueryService
+from services.loguru_service import LoguruConfig
 
 
 def _inject_settings(container: punq.Container) -> None:
     """Register settings."""
     container.register(
-        Settings,
+        service=Settings,
         instance=Settings(),
         scope='singleton',
     )
+
+
+def __inject_pyqt(container: punq.Container) -> None:
+    """Register pyqt6 app."""
+    container.register(
+        service=QApplication,
+        instance=QApplication([]),
+        scope='singletone',
+    )
+
+
+def _inject_loguru(container: punq.Container) -> None:
+    container.register(LoguruConfig)
 
 
 def _inject_db(container: punq.Container) -> None:
     """Register DB services."""
     container.register(ConnectionService)
     container.register(CursorService)
+    container.register(QueryService)
 
 
 def create_container() -> punq.Container:
@@ -24,6 +40,8 @@ def create_container() -> punq.Container:
     container = punq.Container()
     _inject_settings(container)
     _inject_db(container)
+    __inject_pyqt(container)
+    _inject_loguru(container)
     return container
 
 
