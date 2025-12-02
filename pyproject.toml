@@ -1,0 +1,32 @@
+[project]
+name = "sql-trainer"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "punq>=0.7.0",
+    "pydantic>=2.12.5",
+    "pydantic-settings>=2.12.0",
+    "pytest>=9.0.1",
+    "ruff>=0.14.7",
+]
+
+[tool.ruff]
+line-length = 79
+target-version = "py312"
+
+[tool.ruff.lint]
+# Extend the default enabled rules with specific ones.
+# \"E\" for pycodestyle, \"F\" for pyflakes, \"I\" for isort.
+# You can add other rule codes here, like \"B\" for bugbear.
+extend-select = ["E", "F", "I"]
+# Use this to ignore specific rules in certain files or directories.
+# Example: [tool.ruff.lint.per-file-ignores]
+# "tests/*" = ["T001"]
+
+[tool.ruff.format]
+# Use double quotes for strings.
+quote-style = "double"
+# Use spaces for indentation.
+indent-style = "space"

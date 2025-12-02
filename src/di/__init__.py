@@ -1,0 +1,1 @@
+from di.di import resolve  # noqa
