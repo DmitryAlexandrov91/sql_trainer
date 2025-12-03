@@ -6,7 +6,6 @@ from typing import Any, Generator
 from loguru import logger
 
 from config.settings import Settings
-from services.loguru_service import LoguruConfig
 
 
 @dataclass
@@ -30,7 +29,6 @@ class CursorService:
     default commit=True
     """
     _connection: ConnectionService
-    _logger: LoguruConfig
 
     @contextmanager
     def __call__(self, commit=True) -> Generator[Cursor, Any, None]:

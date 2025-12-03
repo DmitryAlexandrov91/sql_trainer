@@ -1,4 +1,4 @@
 pytest_plugins = [
     # Should be the first custom one:
-    'src.tests.fixtures.db',
+    'src.tests.fixtures.settings',
 ]
