@@ -13,7 +13,7 @@ class LoguruConfig:
 
     def __call__(self) -> Any:
         log_file_path = os.path.join(
-            self._settings.base_dir, "log.txt"
+            self._settings.BASE_DIR, self._settings.LOG_NAME
         )
         logger.add(
             log_file_path,

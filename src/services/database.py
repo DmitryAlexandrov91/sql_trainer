@@ -15,7 +15,7 @@ class ConnectionService:
 
     @contextmanager
     def __call__(self) -> Generator[Connection, Any, None]:
-        conn = connect(self._settings.db_path)
+        conn = connect(self._settings.DB_PATH)
         try:
             yield conn
         finally:

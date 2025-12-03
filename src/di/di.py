@@ -15,7 +15,7 @@ def _inject_settings(container: punq.Container) -> None:
     )
 
 
-def __inject_pyqt(container: punq.Container) -> None:
+def _inject_pyqt(container: punq.Container) -> None:
     """Register pyqt6 app."""
     container.register(
         service=QApplication,
@@ -40,7 +40,7 @@ def create_container() -> punq.Container:
     container = punq.Container()
     _inject_settings(container)
     _inject_db(container)
-    __inject_pyqt(container)
+    _inject_pyqt(container)
     _inject_loguru(container)
     return container
 
