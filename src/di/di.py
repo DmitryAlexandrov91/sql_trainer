@@ -20,7 +20,7 @@ def _inject_pyqt(container: punq.Container) -> None:
     container.register(
         service=QApplication,
         instance=QApplication([]),
-        scope='singletone',
+        scope='singleton',
     )
 
 

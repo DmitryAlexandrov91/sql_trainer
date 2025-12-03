@@ -39,9 +39,9 @@ class CursorService:
             try:
                 yield cur
             except Exception as e:
-                self._logger()
                 logger.error(e)
                 cur.connection.rollback()
+                raise e
             finally:
                 if commit:
                     cur.connection.commit()
